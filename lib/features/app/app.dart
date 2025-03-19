@@ -1,4 +1,5 @@
 import 'package:crafty_bay_ecommerce/features/app/app_theme_data.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/compelete_profile_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/splash_screen.dart';
@@ -19,6 +20,7 @@ class CraftyBay extends StatelessWidget {
         '/': (context)=> SplashScreen(),
         EmailVerificationScreen.name : (context)=> EmailVerificationScreen(),
         OTPVerificationScreen.name : (context)=> OTPVerificationScreen(),
+        CompleteProfileScreen.name : (context)=> CompleteProfileScreen(),
       },
     );
   }
