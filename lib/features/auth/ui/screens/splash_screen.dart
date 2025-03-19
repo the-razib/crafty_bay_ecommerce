@@ -1,7 +1,7 @@
-import 'package:crafty_bay_ecommerce/freatures/app/app_colors.dart';
-import 'package:crafty_bay_ecommerce/freatures/app/assets_path.dart';
+import 'package:crafty_bay_ecommerce/features/app/app_colors.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/email_verification_screen.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,6 +12,17 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    super.initState();
+    _moveToNextScreen();
+  }
+
+  Future<void> _moveToNextScreen()async{
+    await Future.delayed(Duration(seconds: 2));
+    Navigator.pushReplacementNamed(context, EmailVerificationScreen.name);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -20,10 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             children: [
               Spacer(),
-              SvgPicture.asset(
-                AssetPath.appLogoSvg,
-                width: 120,
-              ),
+              AppLogoWidget(),
               Spacer(),
               CircularProgressIndicator(
                 color: AppColors.themeColor,
@@ -35,3 +43,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+
