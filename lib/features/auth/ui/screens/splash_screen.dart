@@ -1,6 +1,7 @@
 import 'package:crafty_bay_ecommerce/features/app/app_colors.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widgets.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _moveToNextScreen()async{
     await Future.delayed(Duration(seconds: 2));
-    Navigator.pushReplacementNamed(context, EmailVerificationScreen.name);
+    Navigator.pushReplacementNamed(context, MainBottomNavScreen.name);
   }
 
   @override

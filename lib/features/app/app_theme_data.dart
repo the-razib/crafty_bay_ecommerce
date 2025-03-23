@@ -9,8 +9,8 @@ class AppThemeData {
           ProgressIndicatorThemeData(color: AppColors.themeColor),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
-        elevation: 3
+        color: Colors.white,
+        elevation: 0
       ),
       textTheme: TextTheme(
         titleLarge: TextStyle(
