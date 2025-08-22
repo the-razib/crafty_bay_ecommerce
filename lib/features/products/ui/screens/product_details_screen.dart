@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
-import 'package:crafty_bay_ecommerce/app/app_constants.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay_ecommerce/features/cart/ui/controllers/cart_controller.dart';
 import 'package:crafty_bay_ecommerce/features/cart/ui/screens/cart_screen.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/controllers/auth_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/count_increment_decrement_widget.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
@@ -32,6 +33,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       Get.find<ProductDetailsController>();
   final WishListController _wishlistController = Get.find<WishListController>();
   int _itemCount = 1;
+  String _selectedColor = "";
+  String _selectedSize = "";
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +89,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       height: 4,
                                     ),
                                     ColorPickerWidget(
-                                      colors: controller.productModel!.colors!
-                                          .map((e) => AppConstants.colors[e]!)
-                                          .toList(),
+                                      colors:
+                                          controller.productModel?.colors ?? [],
+                                      onChangeColor: (color) {
+                                        setState(() {
+                                          _selectedColor = color;
+                                        });
+                                      },
                                     ),
                                     const SizedBox(height: 8),
                                     const Text(
@@ -102,7 +109,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       height: 4,
                                     ),
                                     SizePickerWidget(
-                                      sizes: controller.productModel!.sizes!,
+                                      sizes:
+                                          controller.productModel?.sizes ?? [],
+                                      onChangeSize: (size) {
+                                        setState(() {
+                                          _selectedSize = size;
+                                        });
+                                      },
                                     ),
                                     const SizedBox(height: 16),
                                     const Text(
@@ -241,7 +254,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             SizedBox(
               width: 150,
               child: ElevatedButton(
-                onPressed: () => _onClickedToCart(),
+                onPressed: () => _onClickAddToCart(),
                 child: const Text("Add to cart"),
               ),
             ),
@@ -267,33 +280,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             .firstWhereOrNull((element) => element.product?.sId == productId)
             ?.sId ??
         "";
-    // check if product is already in wishlist
-    if (_wishlistController.isProductInWishlist(productId)) {
-      bool isSuccess =
-          await _wishlistController.removeFromWishList(wishlistItem);
-      if (isSuccess) {
-        _reloadWishList();
-        if (mounted) {
-          showSnackBarMessage(context, "Product removed from wishlist");
+    if (await Get.find<AuthController>().isUserLoggedIn()) {
+      // check if product is already in wishlist
+      if (_wishlistController.isProductInWishlist(productId)) {
+        bool isSuccess =
+            await _wishlistController.removeFromWishList(wishlistItem);
+        if (isSuccess) {
+          _reloadWishList();
+          if (mounted) {
+            showSnackBarMessage(context, "Product removed from wishlist");
+          }
+        } else {
+          if (mounted) {
+            showSnackBarMessage(
+                context, "Product failed to remove from wishlist", true);
+          }
         }
       } else {
-        if (mounted) {
-          showSnackBarMessage(
-              context, "Product failed to remove from wishlist", true);
+        bool isSuccess = await _wishlistController.addToWishList(productId);
+        if (isSuccess) {
+          _reloadWishList();
+          if (mounted) {
+            showSnackBarMessage(context, "Product added to wishlist");
+          }
+        } else {
+          if (mounted) {
+            showSnackBarMessage(
+                context, "Product failed to add into wishlist", true);
+          }
         }
       }
     } else {
-      bool isSuccess = await _wishlistController.addToWishList(productId);
-      if (isSuccess) {
-        _reloadWishList();
-        if (mounted) {
-          showSnackBarMessage(context, "Product added to wishlist");
-        }
-      } else {
-        if (mounted) {
-          showSnackBarMessage(
-              context, "Product failed to add into wishlist", true);
-        }
+      if (mounted) {
+        Navigator.pushNamed(context, SignInScreen.name);
       }
     }
   }
@@ -304,17 +323,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     setState(() {});
   }
 
-  void _onClickedToCart() async {
-    String productId = _productDetailsController.productModel?.sId ?? "";
-    bool isSuccess = await Get.find<CartController>().addToCart(productId);
-    if (isSuccess) {
-      if (mounted) {
-        showSnackBarMessage(context, "Product added to cart");
-        Navigator.pushNamed(context, CartScreen.name);
+  void _onClickAddToCart() async {
+    if (await Get.find<AuthController>().isUserLoggedIn()) {
+      String productId = _productDetailsController.productModel?.sId ?? "";
+      bool isSuccess = await Get.find<CartController>().addToCart({
+        "product": productId,
+        "quantity": _itemCount,
+        "color": _selectedColor,
+        "size": _selectedSize,
+      });
+      if (isSuccess) {
+        if (mounted) {
+          showSnackBarMessage(context, "Product added to cart");
+          Navigator.pushNamed(context, CartScreen.name);
+        }
+      } else {
+        if (mounted) {
+          showSnackBarMessage(context, "Product failed to add into cart", true);
+        }
       }
     } else {
       if (mounted) {
-        showSnackBarMessage(context, "Product failed to add into cart", true);
+        Navigator.pushNamed(context, SignInScreen.name);
       }
     }
   }

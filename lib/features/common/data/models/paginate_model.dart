@@ -20,9 +20,12 @@ class PaginateModel<T> {
     T Function(Map<String, dynamic> json) fromJsonT,
   ) {
     return PaginateModel<T>(
+      // results: json['results'] != null
+      //     ? (json['results'] as List).map((item) => fromJsonT(item)).toList()
+      //     : <T>[], // Handle null results by returning an empty list
       results: json['results'] != null
           ? (json['results'] as List).map((item) => fromJsonT(item)).toList()
-          : <T>[], // Handle null results by returning an empty list
+          : <T>[],
       total: json['total'] ?? 0, // Handle null total by defaulting to 0
       firstPage: json['first_page'],
       previous: json['previous'],

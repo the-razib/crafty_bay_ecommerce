@@ -1,6 +1,8 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:crafty_bay_ecommerce/app/app_colors.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
@@ -69,6 +71,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: const Text("Signup"),
                 );
               }),
+              const SizedBox(height: 16),
+              _buildSignInSection(Theme.of(context).textTheme),
             ],
           ),
         ),
@@ -224,6 +228,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       }
     }
+  }
+
+  Widget _buildSignInSection(TextTheme textTheme) {
+    return Center(
+      child: Column(
+        children: [
+          // TextButton(
+          //   onPressed: () => Get.toNamed(SignInScreen.name),
+          //   child: const Text(
+          //     'Forgot Password?',
+          //     style: TextStyle(
+          //       color: Colors.grey,
+          //     ),
+          //   ),
+          // ),
+          RichText(
+            text: TextSpan(
+              text: 'Already have an account? ',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+              children: [
+                TextSpan(
+                  text: ' Login',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: AppColors.themeColor,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

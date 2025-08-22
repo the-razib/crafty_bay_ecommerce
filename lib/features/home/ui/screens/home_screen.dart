@@ -39,12 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  void _isLoggedInFn() async {
-    _isLoggedIn = await _authController.isUserLoggedIn();
-    await Get.find<UserController>().checkUserLoggedIn();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,5 +233,11 @@ class _HomeScreenState extends State<HomeScreen> {
         "productList": productList,
       },
     );
+  }
+
+  void _isLoggedInFn() async {
+    _isLoggedIn = await _authController.isUserLoggedIn();
+    await Get.find<UserController>().checkUserLoggedIn();
+    setState(() {});
   }
 }

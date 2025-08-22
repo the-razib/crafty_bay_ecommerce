@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
+import 'package:crafty_bay_ecommerce/app/app_constants.dart';
 
 class ColorPickerWidget extends StatefulWidget {
-  const ColorPickerWidget({super.key, required this.colors});
+  const ColorPickerWidget({
+    super.key,
+    this.colors = const ["Green", "Red", "Blue", "Yellow"],
+    this.onChangeColor,
+  });
 
-  final List<Color> colors;
+  final List<String> colors;
+  final void Function(String)? onChangeColor;
   @override
   State<ColorPickerWidget> createState() => _ColorPickerWidgetState();
 }
 
 class _ColorPickerWidgetState extends State<ColorPickerWidget> {
   late Color _selectedColor;
+  final Map<String, Color> _colors = {};
 
   @override
   void initState() {
+    for (String color in widget.colors) {
+      _colors[color] = AppConstants.colors[color] ?? Colors.black;
+    }
     if (widget.colors.isNotEmpty) {
-      _selectedColor = widget.colors.first;
+      _selectedColor = _colors[widget.colors.first] ?? AppColors.themeColor;
     } else {
       _selectedColor = AppColors.themeColor;
     }
@@ -26,19 +36,19 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
   Widget build(BuildContext context) {
     return Row(
       spacing: 12,
-      children: widget.colors.map((color) {
+      children: _colors.entries.map((entry) {
         return GestureDetector(
           onTap: () {
-            setState(() {
-              _selectedColor = color;
-            });
+            _selectedColor = entry.value;
+            widget.onChangeColor?.call(entry.key);
+            setState(() {});
           },
           child: Container(
             decoration: BoxDecoration(
-              color: color,
+              color: entry.value,
               shape: BoxShape.circle,
               border: Border.all(
-                color: color == Colors.white
+                color: entry.value == Colors.white
                     ? AppColors.themeColor
                     : Colors.transparent,
               ),
@@ -47,9 +57,9 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
             height: 28,
             child: Icon(
               Icons.check,
-              color: _selectedColor != color
+              color: _selectedColor != entry.value
                   ? Colors.transparent
-                  : color == Colors.white
+                  : entry.value == Colors.white
                       ? AppColors.themeColor
                       : Colors.white,
             ),

@@ -30,7 +30,8 @@ class OtpVerificationController extends GetxController {
     if (response.isSuccess) {
       _errorMessage = null;
       isSuccess = true;
-      SignInModel signInModel = SignInModel.fromJson(response.responseData);
+      SignInModel signInModel =
+          SignInModel.fromJson(response.responseData["data"]);
       // read profile data
       await Get.find<AuthController>().saveUserData(
         signInModel.token!,

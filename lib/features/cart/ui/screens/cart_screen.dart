@@ -111,7 +111,7 @@ class _CartScreenState extends State<CartScreen> {
                               if (controller.cartList[index].color != null ||
                                   controller.cartList[index].size != null)
                                 Text(
-                                    "${controller.cartList[index].color != null ? "Color: ${controller.cartList[index].color}," : ""}${controller.cartList[index].size != null ? "Size: ${controller.cartList[index].size}," : ""}",
+                                    "${controller.cartList[index].color != null ? "Color: ${controller.cartList[index].color}," : ""}${controller.cartList[index].size != null ? " Size: ${controller.cartList[index].size}" : ""}",
                                     style: textStyle.bodySmall),
                             ],
                           ),

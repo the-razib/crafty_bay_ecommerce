@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/otpl_verification_controller.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/resend_otp_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:crafty_bay_ecommerce/features/cart/ui/controllers/cart_controller.dart';
@@ -26,6 +27,7 @@ class ControllerBinder extends Bindings {
     Get.put(MainLayoutController());
     Get.put(NetworkCaller());
     Get.put(SignInController());
+    Get.put(ResendOtpController());
     Get.put(SignUpController());
     Get.put(AuthController());
     Get.put(UserController());

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:crafty_bay_ecommerce/features/auth/data/models/user_model.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/utils/verify_token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
@@ -32,7 +33,11 @@ class AuthController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getString(_accessTokenKey) != null) {
       await getUserData();
-      return true;
+      if (verifyToken(accessToken)) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -43,6 +48,7 @@ class AuthController {
       value.remove(_accessTokenKey);
       value.remove(_profileDataKey);
     });
+
     accessToken = null;
     userModel = null;
   }

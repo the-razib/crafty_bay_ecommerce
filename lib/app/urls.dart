@@ -30,4 +30,6 @@ class Urls {
 
   static const String wishlist = '$_baseUrl/wishlist';
   static const String cartUrl = '$_baseUrl/cart';
+
+  static const String resendOtp = '$_baseUrl/auth/resend-otp';
 }

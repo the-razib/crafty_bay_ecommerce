@@ -8,6 +8,7 @@ class AppConstants {
     "Green": Colors.green,
     "Yellow": Colors.yellow,
     "Orange": Colors.orange,
+    "Golden": Colors.amber,
     "Purple": Colors.purple,
     "Pink": Colors.pink,
     "Brown": Colors.brown,

@@ -34,7 +34,7 @@ class _ProductDetailsCarouselSliderState
               setState(() {});
             },
             viewportFraction: 1.0,
-            height: 220.0,
+            height: 300.0,
             enlargeCenterPage: true,
             autoPlay: false,
             aspectRatio: 16 / 9,

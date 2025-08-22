@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/app_theme_data.dart';
 import 'package:crafty_bay_ecommerce/app/controller_binder.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/resend_otp_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/splash_screens.dart';
@@ -42,6 +43,8 @@ class MCommerceApp extends StatelessWidget {
           widget = const MainLayout();
         } else if (settings.name == SignInScreen.name) {
           widget = const SignInScreen();
+        } else if (settings.name == ResendOtpScreen.name) {
+          widget = const ResendOtpScreen();
         } else if (settings.name == OtpVerificationScreen.name) {
           final String email = settings.arguments as String;
           widget = OtpVerificationScreen(email: email);

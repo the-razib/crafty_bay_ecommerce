@@ -3,26 +3,27 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/resend_otp_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_in_controller.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/screens/resend_otp_screen.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
 
-class SignInScreen extends StatefulWidget {
-  static const String name = 'sign-in';
+class ResendOtpScreen extends StatefulWidget {
+  static const String name = 'resend-otp-screen';
 
-  const SignInScreen({super.key});
+  const ResendOtpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<ResendOtpScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  final SignInController _signInController = Get.find<SignInController>();
+class _SignInScreenState extends State<ResendOtpScreen> {
+  final ResendOtpController _resendOtpController =
+      Get.find<ResendOtpController>();
   final TextEditingController _emailTEController = TextEditingController();
-  final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -40,11 +41,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 const AppLogoWidget(),
                 const SizedBox(height: 28),
                 Text(
-                  "Welcome Back",
+                  "Resend OTP",
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 Text(
-                  'Please Enter Your Email Address',
+                  'Please Enter Your Email Address to Resend OTP',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.black54,
                       ),
@@ -71,33 +72,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
-                  obscureText: true,
-                  obscuringCharacter: '*',
-                  keyboardType: TextInputType.visiblePassword,
-                  textInputAction: TextInputAction.next,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _passwordTEController,
-                  validator: (value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return "Please enter your password";
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    hintText: "Password",
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
                 GetBuilder<SignInController>(builder: (controller) {
                   return Visibility(
                     visible: !controller.isLoading,
                     replacement: const CenterProgressIndicator(),
                     child: ElevatedButton(
-                      onPressed: _onPressedNextButton,
-                      child: const Text("Next"),
+                      onPressed: _onPressedSendOTPButton,
+                      child: const Text("Send OTP"),
                     ),
                   );
                 }),
@@ -110,16 +91,20 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Future<void> _onPressedNextButton() async {
+  Future<void> _onPressedSendOTPButton() async {
     if (_formKey.currentState?.validate() ?? false) {
-      bool isSuccess = await _signInController.signIn(
-          _emailTEController.text.trim(), _passwordTEController.text);
-
+      bool isSuccess =
+          await _resendOtpController.resendOtp(_emailTEController.text.trim());
       if (mounted) {
         if (isSuccess) {
+          Navigator.pushNamed(
+            context,
+            OtpVerificationScreen.name,
+            arguments: _emailTEController.text.trim(),
+          );
+
           _emailTEController.clear();
           _formKey.currentState?.reset();
-          Navigator.pop(context);
         } else {
           showSnackBarMessage(context, "Something went wrong", true);
         }
@@ -131,24 +116,6 @@ class _SignInScreenState extends State<SignInScreen> {
     return Center(
       child: Column(
         children: [
-          // TextButton(
-          //   onPressed: () => Get.toNamed(SignInScreen.name),
-          //   child: const Text(
-          //     'Forgot Password?',
-          //     style: TextStyle(
-          //       color: Colors.grey,
-          //     ),
-          //   ),
-          // ),
-          TextButton(
-            onPressed: () => Navigator.pushNamed(context, ResendOtpScreen.name),
-            child: const Text(
-              'Resend OTP',
-              style: TextStyle(
-                color: Colors.grey,
-              ),
-            ),
-          ),
           RichText(
             text: TextSpan(
               text: 'Don\'t have an account? ',

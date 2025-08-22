@@ -37,22 +37,27 @@ class ProductItemWidget extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child: productModel?.photos != null
-                      ? Image.network(productModel?.photos![0] ?? "",
-                          width: 120, height: 100, fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        })
-                      : Image.asset(
-                          AssetsPath.nikeShoes,
-                          width: 120,
-                          height: 120,
-                        ),
+                  child: Image.network(
+                    productModel?.photos?[0] ?? "",
+                    width: 120,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        AssetsPath.nikeShoes,
+                        width: 120,
+                        height: 120,
+                      );
+                    },
+                  ),
                 ),
               ),
 

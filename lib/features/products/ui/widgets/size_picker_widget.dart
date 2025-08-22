@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
 
 class SizePickerWidget extends StatefulWidget {
-  const SizePickerWidget({super.key, required this.sizes});
+  const SizePickerWidget({super.key, required this.sizes, this.onChangeSize});
 
   final List<String> sizes;
+  final void Function(String)? onChangeSize;
 
   @override
   State<SizePickerWidget> createState() => _SizePickerWidgetState();
@@ -30,6 +31,7 @@ class _SizePickerWidgetState extends State<SizePickerWidget> {
           onTap: () {
             setState(() {
               _selectedSize = size;
+              widget.onChangeSize?.call(size);
             });
           },
           child: Container(
