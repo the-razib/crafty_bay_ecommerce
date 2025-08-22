@@ -6,6 +6,7 @@ import 'package:crafty_bay_ecommerce/features/common/data/models/product_model.d
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_details_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/screens/product_details_screen.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
+import 'package:crafty_bay_ecommerce/features/wishlist/ui/controllers/wish_list_controller.dart';
 
 class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
@@ -110,20 +111,32 @@ class ProductItemWidget extends StatelessWidget {
                         ),
 
                         // favorite Button
-                        Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: const BoxDecoration(
-                            color: AppColors.themeColor,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(4),
+                        GetBuilder<WishListController>(builder: (controller) {
+                          return Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: controller.isProductInWishlist(
+                                      productModel?.sId ?? "")
+                                  ? AppColors.themeColor
+                                  : null,
+                              border: Border.all(
+                                color: AppColors.themeColor,
+                              ),
+                              // color: AppColors.themeColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(4),
+                              ),
                             ),
-                          ),
-                          child: const Icon(
-                            Icons.favorite_border_outlined,
-                            size: 16,
-                            color: Colors.white,
-                          ),
-                        )
+                            child: Icon(
+                              Icons.favorite_border_outlined,
+                              size: 16,
+                              color: controller.isProductInWishlist(
+                                      productModel?.sId ?? "")
+                                  ? Colors.white
+                                  : AppColors.themeColor,
+                            ),
+                          );
+                        })
                       ],
                     ),
                   ],

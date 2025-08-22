@@ -4,12 +4,14 @@ import 'package:crafty_bay_ecommerce/app/app_colors.dart';
 import 'package:crafty_bay_ecommerce/app/app_constants.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/count_increment_decrement_widget.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_details_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/widgets/color_picker_widget.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/widgets/product_details_carousel_slider.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/widgets/size_picker_widget.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/screens/product_reviews_screen.dart';
+import 'package:crafty_bay_ecommerce/features/wishlist/ui/controllers/wish_list_controller.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const String name = '/products/product-details';
@@ -26,6 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Color selectedColor = Colors.black;
   final ProductDetailsController _productDetailsController =
       Get.find<ProductDetailsController>();
+  final WishListController _wishlistController = Get.find<WishListController>();
   int _itemCount = 1;
 
   @override
@@ -174,18 +177,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ),
             child: const Text("Reviews"),
           ),
-          Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: AppColors.themeColor,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Icon(
-              Icons.favorite_border_outlined,
-              color: Colors.white.withAlpha(150),
-              size: 16,
-            ),
-          ),
+          GetBuilder<WishListController>(builder: (ctr) {
+            return InkWell(
+              onTap: () => _onClickWishList(),
+              child: Visibility(
+                visible: !ctr.inProgress,
+                replacement: const CenterProgressIndicator(),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: ctr.isProductInWishlist(
+                            _productDetailsController.productModel?.sId ?? "")
+                        ? AppColors.themeColor
+                        : null,
+                    border: Border.all(color: AppColors.themeColor),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    Icons.favorite_border_outlined,
+                    color: ctr.isProductInWishlist(
+                            _productDetailsController.productModel?.sId ?? "")
+                        ? Colors.white.withAlpha(150)
+                        : AppColors.themeColor,
+                    // color: Colors.white.withAlpha(150),
+                    size: 16,
+                  ),
+                ),
+              ),
+            );
+          }),
         ],
       );
     });
@@ -237,5 +257,48 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
     Get.find<ReviewController>().reset();
     await Get.find<ReviewController>().getProductReviews(id);
+  }
+
+  void _onClickWishList() async {
+    String productId = _productDetailsController.productModel?.sId ?? "";
+    var wishlistItem = _wishlistController.productList
+            .firstWhereOrNull((element) => element.product?.sId == productId)
+            ?.sId ??
+        "";
+    // check if product is already in wishlist
+    if (_wishlistController.isProductInWishlist(productId)) {
+      bool isSuccess =
+          await _wishlistController.removeFromWishList(wishlistItem);
+      if (isSuccess) {
+        _reloadWishList();
+        if (mounted) {
+          showSnackBarMessage(context, "Product removed from wishlist");
+        }
+      } else {
+        if (mounted) {
+          showSnackBarMessage(
+              context, "Product failed to remove from wishlist", true);
+        }
+      }
+    } else {
+      bool isSuccess = await _wishlistController.addToWishList(productId);
+      if (isSuccess) {
+        _reloadWishList();
+        if (mounted) {
+          showSnackBarMessage(context, "Product added to wishlist");
+        }
+      } else {
+        if (mounted) {
+          showSnackBarMessage(
+              context, "Product failed to add into wishlist", true);
+        }
+      }
+    }
+  }
+
+  void _reloadWishList() async {
+    _wishlistController.reset();
+    await _wishlistController.getWishedProductList();
+    setState(() {});
   }
 }

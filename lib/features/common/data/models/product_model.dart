@@ -39,11 +39,26 @@ class ProductModel {
   ProductModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];
+    // if (json['categories'] != null) {
+    //   categories = <CategoryModel>[];
+    //   json['categories'].forEach((v) {
+    //     categories!.add(CategoryModel.fromJson(v));
+    //   });
+    // }
+    // Handle categories (list of strings or list of objects)
     if (json['categories'] != null) {
       categories = <CategoryModel>[];
-      json['categories'].forEach((v) {
-        categories!.add(CategoryModel.fromJson(v));
-      });
+      if (json['categories'].isNotEmpty && json['categories'][0] is String) {
+        // Case 1: categories is a list of strings (category IDs)
+        json['categories'].forEach((v) {
+          categories!.add(CategoryModel(sId: v)); // Only set the _id field
+        });
+      } else {
+        // Case 2: categories is a list of objects (full category details)
+        json['categories'].forEach((v) {
+          categories!.add(CategoryModel.fromJson(v));
+        });
+      }
     }
     slug = json['slug'];
     metaDescription = json['meta_description'];
@@ -77,8 +92,17 @@ class ProductModel {
     quantity = json['quantity'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    brand =
-        json['brand'] != null ? CategoryModel.fromJson(json['brand']) : null;
+    if (json['brand'] != null) {
+      if (json['brand'] is String) {
+        // Case 1: brand is a string (brand ID)
+        brand = CategoryModel(sId: json['brand']);
+      } else {
+        // Case 2: brand is a JSON object (full brand details)
+        brand = CategoryModel.fromJson(json['brand']);
+      }
+    }
+    // brand =
+    //     json['brand'] != null ? CategoryModel.fromJson(json['brand']) : null;
   }
 
   Map<String, dynamic> toJson() {

@@ -14,6 +14,7 @@ import 'package:crafty_bay_ecommerce/features/review/ui/controller/add_new_revie
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/delete_review_controller.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/update_review_controller.dart';
+import 'package:crafty_bay_ecommerce/features/wishlist/ui/controllers/wish_list_controller.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_caller.dart';
 
 class ControllerBinder extends Bindings {
@@ -35,5 +36,6 @@ class ControllerBinder extends Bindings {
     Get.put(AddNewReviewController());
     Get.put(UpdateReviewController());
     Get.put(DeleteReviewController());
+    Get.put(WishListController());
   }
 }

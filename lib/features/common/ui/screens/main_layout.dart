@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:crafty_bay_ecommerce/features/cart/ui/screens/cart_screen.dart';
 import 'package:crafty_bay_ecommerce/features/category/ui/screens/category_screen.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/main_layout_controller.dart';
@@ -7,8 +8,8 @@ import 'package:crafty_bay_ecommerce/features/common/ui/controllers/product_list
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/user_controller.dart';
 import 'package:crafty_bay_ecommerce/features/home/ui/controller/home_carousel_slider_controller.dart';
 import 'package:crafty_bay_ecommerce/features/home/ui/screens/home_screen.dart';
-import 'package:crafty_bay_ecommerce/features/products/ui/screens/cart_screen.dart';
-import 'package:crafty_bay_ecommerce/features/products/ui/screens/wish_list_screen.dart';
+import 'package:crafty_bay_ecommerce/features/wishlist/ui/controllers/wish_list_controller.dart';
+import 'package:crafty_bay_ecommerce/features/wishlist/ui/screens/wish_list_screen.dart';
 
 class MainLayout extends StatefulWidget {
   static const String name = '/bottom-nav-layout';
@@ -29,11 +30,16 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   void initState() {
-    super.initState();
-    Get.find<UserController>().checkUserLoggedIn();
     Get.find<HomeCarouselSliderController>().getHomeBannerList();
     Get.find<CategoryListController>().getCategoryList();
     Get.find<ProductListController>().getProducts();
+    _initLoadData();
+    super.initState();
+  }
+
+  void _initLoadData() async {
+    await Get.find<UserController>().checkUserLoggedIn();
+    await Get.find<WishListController>().getWishedProductList();
   }
 
   @override

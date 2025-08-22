@@ -17,7 +17,7 @@ class NetworkCaller {
       if (accessToken != null) {
         headers['token'] = accessToken;
       }
-      _logRequest(url);
+      _logRequest(url, headers);
       final response = await http.get(uri, headers: headers);
       _logResponse(url, response.statusCode, response.headers, response.body);
       if (response.statusCode == 200) {
