@@ -4,20 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
 import 'package:crafty_bay_ecommerce/app/app_constants.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/otpl_verification_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/complete_profile_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  static const String name = 'otp-verification';
+  const OtpVerificationScreen({super.key, required this.email});
 
-  const OtpVerificationScreen({super.key});
+  static const String name = 'otp-verification';
+  final String email;
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final OtpVerificationController _otpVerificationController =
+      Get.find<OtpVerificationController>();
   final TextEditingController _otpTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -69,7 +76,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   height: 16,
                 ),
                 PinCodeTextField(
-                  length: 4,
+                  length: 6,
                   obscureText: false,
                   autoDismissKeyboard: true,
                   animationType: AnimationType.fade,
@@ -91,17 +98,24 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                   // errorAnimationController: errorController,
                   controller: _otpTEController,
+                  validator: (String? value) {
+                    if (value!.length != 6) {
+                      return "Please enter 6 digit OTP";
+                    } else {
+                      return null;
+                    }
+                  },
                   onCompleted: (v) {
                     print("Completed");
                   },
-                  onChanged: (value) {
-                    print(value);
-                    // setState(() {
-                    //   currentText = value;
-                    // });
-                  },
+                  // onChanged: (value) {
+                  //   print(value);
+                  //   // setState(() {
+                  //   //   currentText = value;
+                  //   // });
+                  // },
                   beforeTextPaste: (text) {
-                    print("Allowing to paste $text");
+                    // print("Allowing to paste $text");
                     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                     //but you can show anything you want here, like your pop up saying wrong paste format or etc
                     return true;
@@ -111,12 +125,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, CompleteProfileScreen.name);
-                  },
-                  child: const Text("Next"),
-                ),
+                GetBuilder<OtpVerificationController>(builder: (controller) {
+                  if (controller.isLoading) {
+                    return const CenterProgressIndicator();
+                  } else {
+                    return ElevatedButton(
+                      onPressed: _onPressedNextButton,
+                      child: const Text("Next"),
+                    );
+                  }
+                }),
                 const SizedBox(
                   height: 28,
                 ),
@@ -156,6 +174,36 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _onPressedNextButton() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      final bool response = await _otpVerificationController.verifyOtp(
+          widget.email, _otpTEController.text.trim());
+      if (response) {
+        if (_otpVerificationController.shouldNavigateToCompleteProfile) {
+          if (mounted) {
+            Navigator.pushNamed(context, CompleteProfileScreen.name);
+          }
+        } else {
+          if (mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, MainLayout.name, (_) => false);
+          }
+        }
+      } else {
+        if (mounted) {
+          showSnackBarMessage(
+            context,
+            _otpVerificationController.errorMessage ?? "Something went wrong",
+            true,
+          );
+
+          Navigator.pushNamedAndRemoveUntil(
+              context, MainLayout.name, (_) => false);
+        }
+      }
+    }
   }
 
   @override

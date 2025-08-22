@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:m_commerce/app/app_colors.dart';
+
+class CategoryItemsIconButton extends StatelessWidget {
+  const CategoryItemsIconButton({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
+
+  final String title;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 4,
+      children: [
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            color: AppColors.themeColor.withAlpha((0.1 * 255).toInt()),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Center(
+            child: Icon(
+              icon,
+              size: 40,
+              color: AppColors.themeColor,
+            ),
+          ),
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.themeColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+}

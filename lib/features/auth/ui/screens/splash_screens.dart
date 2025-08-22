@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart';
 
 class SplashScreens extends StatefulWidget {
+  static const String name = "/";
+
   const SplashScreens({super.key});
 
   @override
@@ -18,7 +20,7 @@ class _SplashScreensState extends State<SplashScreens> {
 
   @override
   Widget build(BuildContext context) {
-    return  const Scaffold(
+    return const Scaffold(
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(24.0),
@@ -40,7 +42,9 @@ class _SplashScreensState extends State<SplashScreens> {
 
   Future<void> _goToNextScreen() async {
     await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushReplacementNamed(context, EmailVerificationScreen.name);
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, MainLayout.name);
+      // Navigator.pushReplacementNamed(context, EmailVerificationScreen.name);
+    }
   }
 }
-
