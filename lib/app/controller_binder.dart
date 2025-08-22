@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/otpl_verification_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_up_controller.dart';
+import 'package:crafty_bay_ecommerce/features/cart/ui/controllers/cart_controller.dart';
+import 'package:crafty_bay_ecommerce/features/cart/ui/controllers/delete_cart_item_controller.dart';
+import 'package:crafty_bay_ecommerce/features/cart/ui/controllers/update_cart_item_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/auth_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/main_layout_controller.dart';
@@ -37,5 +40,8 @@ class ControllerBinder extends Bindings {
     Get.put(UpdateReviewController());
     Get.put(DeleteReviewController());
     Get.put(WishListController());
+    Get.put(CartController());
+    Get.put(UpdateCartItemController());
+    Get.put(DeleteCartItemController());
   }
 }

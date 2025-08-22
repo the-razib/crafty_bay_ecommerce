@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
 import 'package:crafty_bay_ecommerce/app/app_constants.dart';
+import 'package:crafty_bay_ecommerce/features/cart/ui/controllers/cart_controller.dart';
+import 'package:crafty_bay_ecommerce/features/cart/ui/screens/cart_screen.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/count_increment_decrement_widget.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
@@ -239,7 +241,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             SizedBox(
               width: 150,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => _onClickedToCart(),
                 child: const Text("Add to cart"),
               ),
             ),
@@ -300,5 +302,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     _wishlistController.reset();
     await _wishlistController.getWishedProductList();
     setState(() {});
+  }
+
+  void _onClickedToCart() async {
+    String productId = _productDetailsController.productModel?.sId ?? "";
+    bool isSuccess = await Get.find<CartController>().addToCart(productId);
+    if (isSuccess) {
+      if (mounted) {
+        showSnackBarMessage(context, "Product added to cart");
+        Navigator.pushNamed(context, CartScreen.name);
+      }
+    } else {
+      if (mounted) {
+        showSnackBarMessage(context, "Product failed to add into cart", true);
+      }
+    }
   }
 }

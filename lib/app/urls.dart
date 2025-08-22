@@ -1,13 +1,13 @@
 class Urls {
   static const String _baseUrl = "https://ecom-rs8e.onrender.com/api";
 
-  static String signIn = "$_baseUrl/auth/login";
-  static String signUp = "$_baseUrl/auth/signup";
-  static String verifyOtp = "$_baseUrl/auth/verify-otp";
+  static const String signUp = "$_baseUrl/auth/signup";
+  static const String signIn = "$_baseUrl/auth/login";
+  static const String verifyOtp = "$_baseUrl/auth/verify-otp";
 
-  static String readProfile = "$_baseUrl/ReadProfile";
-  static String slides = '$_baseUrl/slides';
-  static String categoryListUrl = '$_baseUrl/categories';
+  static const String readProfile = "$_baseUrl/ReadProfile";
+  static const String slides = '$_baseUrl/slides';
+  static const String categoryListUrl = '$_baseUrl/categories';
 
   static String productListByProductSlugUrl(String productSlug) =>
       '$_baseUrl/products/$productSlug';
@@ -15,16 +15,19 @@ class Urls {
   static String productListByCategoryUrl(int categoryId) =>
       '$_baseUrl/ListProductByCategory/$categoryId';
 
-  static String productListUrl = '$_baseUrl/products';
-  static String wishlist = '$_baseUrl/wishlist';
+  static const String productListUrl = '$_baseUrl/products';
 
   static String productByIdUrl(String productId) =>
       '$_baseUrl/products/id/$productId';
 
-  static String reviewListByProductId = '$_baseUrl/reviews';
-  static String createReview = '$_baseUrl/review';
+  static const String reviewListByProductId = '$_baseUrl/reviews';
+  static const String createReview = '$_baseUrl/review';
+
   static String updateReviewById(String reviewId) =>
       '$_baseUrl/reviews/$reviewId';
   static String deleteReviewById(String reviewId) =>
       '$_baseUrl/reviews/$reviewId';
+
+  static const String wishlist = '$_baseUrl/wishlist';
+  static const String cartUrl = '$_baseUrl/cart';
 }
