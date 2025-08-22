@@ -20,7 +20,7 @@ class TrendingProductListController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productListByRemarkUrl("trending"),
+      Urls.productListByProductSlugUrl("trending"),
     );
 
     if (response.isSuccess) {

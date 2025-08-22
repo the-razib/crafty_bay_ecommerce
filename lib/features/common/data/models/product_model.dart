@@ -1,84 +1,101 @@
-import 'package:crafty_bay_ecommerce/features/common/data/models/brand_model.dart';
 import 'package:crafty_bay_ecommerce/features/common/data/models/category_model.dart';
 
 class ProductModel {
-  int? id;
+  String? sId;
   String? title;
-  String? shortDes;
-  String? price;
-  int? discount;
-  String? discountPrice;
-  String? image;
-  int? stock;
-  int? star;
-  String? remark;
-  int? categoryId;
-  int? brandId;
+  List<CategoryModel>? categories;
+  String? slug;
+  String? metaDescription;
+  String? description;
+  List<String>? photos;
+  List<String>? colors;
+  List<String>? sizes;
+  List<Null>? tags;
+  int? regularPrice;
+  int? currentPrice;
+  int? quantity;
   String? createdAt;
   String? updatedAt;
-  BrandModel? brand;
-  CategoryModel? category;
+  CategoryModel? brand;
 
   ProductModel(
-      {this.id,
+      {this.sId,
       this.title,
-      this.shortDes,
-      this.price,
-      this.discount,
-      this.discountPrice,
-      this.image,
-      this.stock,
-      this.star,
-      this.remark,
-      this.categoryId,
-      this.brandId,
+      this.categories,
+      this.slug,
+      this.metaDescription,
+      this.description,
+      this.photos,
+      this.colors,
+      this.sizes,
+      this.tags,
+      this.regularPrice,
+      this.currentPrice,
+      this.quantity,
       this.createdAt,
       this.updatedAt,
-      this.brand,
-      this.category});
+      this.brand});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    sId = json['_id'];
     title = json['title'];
-    shortDes = json['short_des'];
-    price = json['price'];
-    discount = json['discount'];
-    discountPrice = json['discount_price'];
-    image = json['image'];
-    stock = json['stock'];
-    star = json['star'];
-    remark = json['remark'];
-    categoryId = json['category_id'];
-    brandId = json['brand_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    brand = json['brand'] != null ? BrandModel.fromJson(json['brand']) : null;
-    category = json['category'] != null
-        ? CategoryModel.fromJson(json['category'])
-        : null;
+    if (json['categories'] != null) {
+      categories = <CategoryModel>[];
+      json['categories'].forEach((v) {
+        categories!.add(CategoryModel.fromJson(v));
+      });
+    }
+    slug = json['slug'];
+    metaDescription = json['meta_description'];
+    description = json['description'];
+    if (json['photos'] != null) {
+      photos = <String>[];
+      json['photos'].forEach((v) {
+        photos!.add(v);
+      });
+    }
+    colors = json['colors'].cast<String>();
+    sizes = json['sizes'].cast<String>();
+    if (json['tags'] != null) {
+      tags = <Null>[];
+      json['tags'].forEach((v) {
+        tags!.add(v);
+      });
+    }
+    regularPrice = json['regular_price'];
+    currentPrice = json['current_price'];
+    quantity = json['quantity'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    brand =
+        json['brand'] != null ? CategoryModel.fromJson(json['brand']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['_id'] = sId;
     data['title'] = title;
-    data['short_des'] = shortDes;
-    data['price'] = price;
-    data['discount'] = discount;
-    data['discount_price'] = discountPrice;
-    data['image'] = image;
-    data['stock'] = stock;
-    data['star'] = star;
-    data['remark'] = remark;
-    data['category_id'] = categoryId;
-    data['brand_id'] = brandId;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    if (categories != null) {
+      data['categories'] = categories!.map((v) => v.toJson()).toList();
+    }
+    data['slug'] = slug;
+    data['meta_description'] = metaDescription;
+    data['description'] = description;
+    if (photos != null) {
+      data['photos'] = photos!.map((v) => v).toList();
+    }
+    data['colors'] = colors;
+    data['sizes'] = sizes;
+    if (tags != null) {
+      data['tags'] = tags!.map((v) => v).toList();
+    }
+    data['regular_price'] = regularPrice;
+    data['current_price'] = currentPrice;
+    data['quantity'] = quantity;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     if (brand != null) {
       data['brand'] = brand!.toJson();
-    }
-    if (category != null) {
-      data['category'] = category!.toJson();
     }
     return data;
   }

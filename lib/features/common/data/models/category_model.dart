@@ -4,7 +4,7 @@ class CategoryModel {
   String? slug;
   String? description;
   String? icon;
-  Null? parent;
+  String? parent;
   String? createdAt;
   String? updatedAt;
   int? iV;

@@ -20,7 +20,7 @@ class SpecialProductListController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productListByRemarkUrl("special"),
+      Urls.productListByProductSlugUrl("special"),
     );
 
     if (response.isSuccess) {

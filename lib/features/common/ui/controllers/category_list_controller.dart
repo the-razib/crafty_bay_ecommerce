@@ -27,12 +27,12 @@ class CategoryListController extends GetxController {
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest("${Urls.categoryListUrl}$requestParams");
     if (response.isSuccess) {
-      PaginateModel paginateModel = PaginateModel.fromJson(
+      PaginateModel<CategoryModel> paginateModel =
+          PaginateModel<CategoryModel>.fromJson(
         response.responseData["data"],
         CategoryModel.fromJson,
       );
-      _categoryList
-          .addAll(paginateModel.results.map((e) => e as CategoryModel));
+      _categoryList.addAll(paginateModel.results.map((e) => e));
       // if (paginateModel.lastPage != null && paginateModel.lastPage! > page) {
       lastPage = paginateModel.lastPage;
       page++;

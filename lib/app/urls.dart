@@ -1,5 +1,4 @@
 class Urls {
-  // static const String _baseUrl = "https://ecommerce-api.codesilicon.com/api";
   static const String _baseUrl = "https://ecom-rs8e.onrender.com/api";
 
   static String signIn = "$_baseUrl/auth/login";
@@ -10,11 +9,13 @@ class Urls {
   static String slides = '$_baseUrl/slides';
   static String categoryListUrl = '$_baseUrl/categories';
 
-  static String productListByRemarkUrl(String remark) =>
-      '$_baseUrl/ListProductByRemark/$remark';
+  static String productListByProductSlugUrl(String productSlug) =>
+      '$_baseUrl/products/$productSlug';
 
   static String productListByCategoryUrl(int categoryId) =>
       '$_baseUrl/ListProductByCategory/$categoryId';
+
+  static String productListUrl = '$_baseUrl/products';
 
   static String productDetailsUrl(int productId) =>
       '$_baseUrl/ProductDetailsById/$productId';

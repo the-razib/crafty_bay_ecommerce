@@ -20,7 +20,7 @@ class NewProductListController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productListByRemarkUrl("new"),
+      Urls.productListByProductSlugUrl("Products"),
     );
 
     if (response.isSuccess) {
@@ -29,7 +29,7 @@ class NewProductListController extends GetxController {
       isSuccess = true;
     } else {
       isSuccess = false;
-      _errorMessage = response.errorMessage ?? "Something went wrong";
+      _errorMessage = response.errorMessage;
     }
 
     _isLoading = false;

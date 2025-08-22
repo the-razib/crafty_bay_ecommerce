@@ -20,7 +20,7 @@ class TopProductListController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productListByRemarkUrl("top"),
+      Urls.productListByProductSlugUrl("top"),
     );
 
     if (response.isSuccess) {

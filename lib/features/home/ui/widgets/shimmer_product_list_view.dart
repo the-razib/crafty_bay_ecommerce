@@ -13,11 +13,12 @@ class ShimmerProductListView extends StatelessWidget {
       baseColor: Colors.grey,
       highlightColor: Colors.white,
       child: const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ProductItemWidget(),
-          ProductItemWidget(),
-          ProductItemWidget(),
-          ProductItemWidget(),
+          Expanded(child: ProductItemWidget()),
+          Expanded(child: ProductItemWidget()),
+          Expanded(child: ProductItemWidget()),
         ],
       ),
     );

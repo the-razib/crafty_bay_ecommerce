@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:crafty_bay_ecommerce/app/assets_path.dart';
-import 'package:crafty_bay_ecommerce/features/common/data/models/category_model.dart';
-import 'package:crafty_bay_ecommerce/features/common/data/models/product_model.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/category_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/main_layout_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/product_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/widgets/app_bar_icon_button.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/widgets/category_items_icon_widget.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/widgets/product_item_widget.dart';
-import 'package:crafty_bay_ecommerce/features/home/ui/controller/home_carousel_slider_controller.dart';
-import 'package:crafty_bay_ecommerce/features/home/ui/widgets/home_carousel_slider.dart';
-import 'package:crafty_bay_ecommerce/features/home/ui/widgets/home_title_section.dart';
-import 'package:crafty_bay_ecommerce/features/home/ui/widgets/product_search_bar.dart';
-import 'package:crafty_bay_ecommerce/features/home/ui/widgets/shimmer_product_list_view.dart';
-import 'package:crafty_bay_ecommerce/features/products/ui/screens/products_screen.dart';
+import 'package:m_commerce/app/assets_path.dart';
+import 'package:m_commerce/features/common/data/models/category_model.dart';
+import 'package:m_commerce/features/common/data/models/product_model.dart';
+import 'package:m_commerce/features/common/ui/controllers/category_list_controller.dart';
+import 'package:m_commerce/features/common/ui/controllers/main_layout_controller.dart';
+import 'package:m_commerce/features/common/ui/controllers/product_list_controller.dart';
+import 'package:m_commerce/features/common/ui/widgets/app_bar_icon_button.dart';
+import 'package:m_commerce/features/common/ui/widgets/category_items_icon_widget.dart';
+import 'package:m_commerce/features/common/ui/widgets/product_item_widget.dart';
+import 'package:m_commerce/features/home/ui/controller/home_carousel_slider_controller.dart';
+import 'package:m_commerce/features/home/ui/widgets/home_carousel_slider.dart';
+import 'package:m_commerce/features/home/ui/widgets/home_title_section.dart';
+import 'package:m_commerce/features/home/ui/widgets/product_search_bar.dart';
+import 'package:m_commerce/features/home/ui/widgets/shimmer_product_list_view.dart';
+import 'package:m_commerce/features/products/ui/screens/products_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisSpacing: 8,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) => const FittedBox(
+                    (context, index) => FittedBox(
                       child: ProductItemWidget(),
                     ),
                     childCount: controller.productList.length,

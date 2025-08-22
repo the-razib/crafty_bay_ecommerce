@@ -161,7 +161,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           width: 250,
           child: Text(
             _productDetailsController
-                    .productDetailsList?.first.product?.shortDes ??
+                    .productDetailsList?.first.product?.description ??
                 "",
             style: textStyle.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
@@ -182,9 +182,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       spacing: 4,
       children: [
         const Icon(Icons.star, color: Colors.amber),
-        Text(_productDetailsController.productDetailsList!.first.product?.star
-                .toString() ??
-            ""),
+        const Text("4.5"),
         TextButton(
           onPressed: () => _onTapReviews(
               context, _productDetailsController.productDetailsList!.first.id!),

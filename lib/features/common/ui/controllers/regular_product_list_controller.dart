@@ -20,7 +20,7 @@ class RegularProductListController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productListByRemarkUrl("regular"),
+      Urls.productListByProductSlugUrl("regular"),
     );
 
     if (response.isSuccess) {

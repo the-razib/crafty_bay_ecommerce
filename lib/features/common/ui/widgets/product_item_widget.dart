@@ -17,7 +17,7 @@ class ProductItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap(context, productModel!.id!),
+      onTap: () => onTap(context, 1),
       child: Card(
         color: Colors.white,
         child: SizedBox(
@@ -35,8 +35,8 @@ class ProductItemWidget extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child: productModel?.image != null
-                      ? Image.network(productModel!.image!,
+                  child: productModel?.photos != null
+                      ? Image.network(productModel?.photos![0] ?? "",
                           width: 120, height: 100, fit: BoxFit.cover,
                           loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
@@ -84,7 +84,7 @@ class ProductItemWidget extends StatelessWidget {
                       children: [
                         // price
                         Text(
-                          "\$${productModel?.price}",
+                          "\$${productModel?.currentPrice}",
                           style: const TextStyle(
                             color: AppColors.themeColor,
                             fontWeight: FontWeight.w600,
@@ -92,16 +92,16 @@ class ProductItemWidget extends StatelessWidget {
                         ),
 
                         // rating star
-                        Wrap(
+                        const Wrap(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.star,
                               color: Colors.amber,
                               size: 16,
                             ),
                             Text(
-                              "${productModel?.star}",
-                              style: const TextStyle(
+                              "4.5",
+                              style: TextStyle(
                                 color: Colors.black54,
                               ),
                             ),

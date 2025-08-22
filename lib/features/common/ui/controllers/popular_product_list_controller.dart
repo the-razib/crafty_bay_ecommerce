@@ -20,7 +20,7 @@ class PopularProductListController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productListByRemarkUrl("popular"),
+      Urls.productListByProductSlugUrl("popular"),
     );
 
     if (response.isSuccess) {
