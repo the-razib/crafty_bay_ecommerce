@@ -1,6 +1,6 @@
-# crafty_bay_ecommerce
+# m_commerce
 
-A new Flutter project.
+A new Flutter ecommerce project.
 
 ## Getting Started
 

@@ -1,13 +1,12 @@
-import 'package:crafty_bay_ecommerce/features/app/app_colors.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widgets.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key});
-
   static const String name = 'email-verification';
+
+  const EmailVerificationScreen({super.key});
 
   @override
   State<EmailVerificationScreen> createState() =>
@@ -22,54 +21,53 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 100),
-                AppLogoWidget(),
-                SizedBox(height: 24),
+                const SizedBox(height: 134),
+                const AppLogoWidget(),
+                const SizedBox(height: 28),
                 Text(
-                  'Welcome Back',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  "Welcome Back",
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
-                SizedBox(height: 4),
                 Text(
-                  'Please enter your email address',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: Colors.grey),
+                  'Please Enter Your Email Address',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.black54,
+                      ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(
+                  height: 16,
+                ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (String? value){
-                    if(value?.trim().isEmpty?? true){
-                      return 'Please enter your email';
+                  controller: _emailTEController,
+                  validator: (value) {
+                    if (value?.trim().isEmpty ?? true) {
+                      return "Please enter your email address";
                     }
-                    if(EmailValidator.validate(value!)==false){
-                      return 'Please enter valid email';
+                    if (EmailValidator.validate(value!) == false) {
+                      return "Please Enter your valid email";
                     }
                     return null;
                   },
-                  controller: _emailTEController,
-                  decoration: InputDecoration(hintText: 'Email Address'),
+                  decoration: const InputDecoration(
+                    hintText: "Email Address",
+                  ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(
+                  height: 16,
+                ),
                 ElevatedButton(
                   onPressed: () {
-                    // if(_formKey.currentState!.validate()){
-                    //
-                    // }
-                    Navigator.pushNamed(context, OTPVerificationScreen.name);
+                    Navigator.pushNamed(context, OtpVerificationScreen.name);
                   },
-                  child: Text('Next'),
-                )
+                  child: const Text("Next"),
+                ),
               ],
             ),
           ),
