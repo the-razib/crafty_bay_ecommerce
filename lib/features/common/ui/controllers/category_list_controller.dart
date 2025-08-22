@@ -1,27 +1,42 @@
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/urls.dart';
-import 'package:crafty_bay_ecommerce/features/common/data/models/category_list_model.dart';
 import 'package:crafty_bay_ecommerce/features/common/data/models/category_model.dart';
+import 'package:crafty_bay_ecommerce/features/common/data/models/paginate_model.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_caller.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_response.dart';
 
 class CategoryListController extends GetxController {
   bool _inProgress = false;
-  CategoryListModel? _categoryListModel;
+  final List<CategoryModel> _categoryList = [];
   String? _errorMessage;
+  int count = 0;
+  int page = 1;
+  int? lastPage = 1;
 
   bool get inProgress => _inProgress;
-  List<CategoryModel> get categoryList => _categoryListModel?.data ?? [];
+  List<CategoryModel>? get categoryList => _categoryList;
   String? get errorMessage => _errorMessage;
 
   Future<bool> getCategoryList() async {
+    if (lastPage == null || page > lastPage!) return false;
     bool isSuccess = false;
     _inProgress = true;
+    count = 30;
     update();
-    final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(Urls.categoryListUrl);
+    String requestParams = "?count=$count&page=$page";
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .getRequest("${Urls.categoryListUrl}$requestParams");
     if (response.isSuccess) {
-      _categoryListModel = CategoryListModel.fromJson(response.responseData);
+      PaginateModel paginateModel = PaginateModel.fromJson(
+        response.responseData["data"],
+        CategoryModel.fromJson,
+      );
+      _categoryList
+          .addAll(paginateModel.results.map((e) => e as CategoryModel));
+      // if (paginateModel.lastPage != null && paginateModel.lastPage! > page) {
+      lastPage = paginateModel.lastPage;
+      page++;
+      // }
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

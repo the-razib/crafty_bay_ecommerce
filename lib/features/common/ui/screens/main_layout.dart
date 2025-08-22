@@ -3,12 +3,7 @@ import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/features/category/ui/screens/category_screen.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/main_layout_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/new_product_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/popular_product_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/regular_product_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/special_product_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/top_product_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/trending_product_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/home/ui/controller/home_carousel_slider_controller.dart';
 import 'package:crafty_bay_ecommerce/features/home/ui/screens/home_screen.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/screens/cart_screen.dart';
@@ -36,11 +31,11 @@ class _MainLayoutState extends State<MainLayout> {
     Get.find<HomeCarouselSliderController>().getHomeBannerList();
     Get.find<CategoryListController>().getCategoryList();
     Get.find<PopularProductListController>().getNewProductList();
-    Get.find<SpecialProductListController>().getNewProductList();
-    Get.find<NewProductListController>().getNewProductList();
-    Get.find<TopProductListController>().getNewProductList();
-    Get.find<TrendingProductListController>().getNewProductList();
-    Get.find<RegularProductListController>().getNewProductList();
+    // Get.find<SpecialProductListController>().getNewProductList();
+    // Get.find<NewProductListController>().getNewProductList();
+    // Get.find<TopProductListController>().getNewProductList();
+    // Get.find<TrendingProductListController>().getNewProductList();
+    // Get.find<RegularProductListController>().getNewProductList();
     super.initState();
   }
 

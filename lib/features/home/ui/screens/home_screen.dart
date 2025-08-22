@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     spacing: 24,
-                    children: _getCategoryList(controller.categoryList),
+                    children: _getCategoryList(controller.categoryList ?? []),
                   ),
                 );
               }),
@@ -269,10 +269,10 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> list = [];
     for (CategoryModel category in categoryList) {
       list.add(CategoryItemsIconWidget(
-        title: category.categoryName ?? "",
+        title: category.title ?? "",
         icon: Icons.image_outlined,
-        imageUrl: category.categoryImg,
-        categoryId: category.id!,
+        imageUrl: category.icon,
+        categoryId: 1,
       ));
     }
     return list;

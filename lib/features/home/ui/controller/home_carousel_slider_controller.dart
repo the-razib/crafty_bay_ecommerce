@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/urls.dart';
-import 'package:crafty_bay_ecommerce/features/home/data/models/paginate_model.dart';
+import 'package:crafty_bay_ecommerce/features/common/data/models/paginate_model.dart';
 import 'package:crafty_bay_ecommerce/features/home/data/models/slider_model.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_caller.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_response.dart';
 
 class HomeCarouselSliderController extends GetxController {
   bool _inProgress = false;
-  PaginateModel? _paginateModel;
+  PaginateModel<SliderModel>? _paginateModel;
   String? _errorMessage;
 
   bool get inProgress => _inProgress;
@@ -23,7 +23,10 @@ class HomeCarouselSliderController extends GetxController {
     );
     if (response.isSuccess) {
       _errorMessage = null;
-      _paginateModel = PaginateModel.fromJson(response.responseData["data"]);
+      _paginateModel = PaginateModel.fromJson(
+        response.responseData["data"],
+        SliderModel.fromJson,
+      );
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
