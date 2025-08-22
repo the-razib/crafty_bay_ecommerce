@@ -98,14 +98,14 @@ class ProductReviewsScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        reviewModel.profile?.cusName ?? "",
+                        "${reviewModel.user?.firstName ?? ""} ${reviewModel.user?.lastName ?? ""}",
                         style: textStyle.titleMedium,
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    reviewModel.description ?? "",
+                    reviewModel.comment ?? "",
                     style: textStyle.bodySmall.copyWith(
                       color: Colors.grey,
                     ),

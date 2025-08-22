@@ -1,27 +1,52 @@
 class UserModel {
-  int? id;
+  String? sId;
+  String? firstName;
+  String? lastName;
   String? email;
-  String? otp;
-  String? createdAt;
-  String? updatedAt;
+  bool? emailVerified;
+  String? phone;
+  bool? phoneVerified;
+  String? avatarUrl;
+  String? city;
+  int? role;
 
-  UserModel({this.id, this.email, this.otp, this.createdAt, this.updatedAt});
+  UserModel(
+      {this.sId,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.emailVerified,
+      this.phone,
+      this.phoneVerified,
+      this.avatarUrl,
+      this.city,
+      this.role});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    sId = json['_id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
     email = json['email'];
-    otp = json['otp'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    emailVerified = json['email_verified'];
+    phone = json['phone'];
+    phoneVerified = json['phone_verified'];
+    avatarUrl = json['avatar_url'];
+    city = json['city'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['_id'] = sId;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
     data['email'] = email;
-    data['otp'] = otp;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    data['email_verified'] = emailVerified;
+    data['phone'] = phone;
+    data['phone_verified'] = phoneVerified;
+    data['avatar_url'] = avatarUrl;
+    data['city'] = city;
+    data['role'] = role;
     return data;
   }
 }

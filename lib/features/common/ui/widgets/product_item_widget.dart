@@ -5,6 +5,7 @@ import 'package:crafty_bay_ecommerce/app/assets_path.dart';
 import 'package:crafty_bay_ecommerce/features/common/data/models/product_model.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_details_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/screens/product_details_screen.dart';
+import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
 
 class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
@@ -17,7 +18,7 @@ class ProductItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap(context, 1),
+      onTap: () => onTap(context, productModel?.sId ?? ""),
       child: Card(
         color: Colors.white,
         child: SizedBox(
@@ -135,8 +136,9 @@ class ProductItemWidget extends StatelessWidget {
     );
   }
 
-  void onTap(BuildContext context, int productId) {
-    Get.find<ProductDetailsController>().getProductDetails(productId);
+  void onTap(BuildContext context, String productId) {
+    Get.find<ProductDetailsController>().getProductById(productId);
+    Get.find<ReviewController>().getProductReviews(productId);
 
     Navigator.pushNamed(
       context,

@@ -10,7 +10,7 @@ class ProductModel {
   List<String>? photos;
   List<String>? colors;
   List<String>? sizes;
-  List<Null>? tags;
+  List<String>? tags;
   int? regularPrice;
   int? currentPrice;
   int? quantity;
@@ -54,10 +54,20 @@ class ProductModel {
         photos!.add(v);
       });
     }
-    colors = json['colors'].cast<String>();
-    sizes = json['sizes'].cast<String>();
+    if (json['colors'] != null) {
+      colors = <String>[];
+      json['colors'].forEach((v) {
+        colors!.add(v);
+      });
+    }
+    if (json['sizes'] != null) {
+      sizes = <String>[];
+      json['sizes'].forEach((v) {
+        sizes!.add(v);
+      });
+    }
     if (json['tags'] != null) {
-      tags = <Null>[];
+      tags = <String>[];
       json['tags'].forEach((v) {
         tags!.add(v);
       });

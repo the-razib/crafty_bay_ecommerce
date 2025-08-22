@@ -1,21 +1,21 @@
 import 'package:crafty_bay_ecommerce/features/common/data/models/paginate_model.dart';
 
-class ApiResponseModel<T> {
+class DataResponseModel<T> {
   final int code;
   final String status;
   final String msg;
   final PaginateModel<T> data;
 
-  ApiResponseModel({
+  DataResponseModel({
     required this.code,
     required this.status,
     required this.msg,
     required this.data,
   });
 
-  factory ApiResponseModel.fromJson(
+  factory DataResponseModel.fromJson(
       Map<String, dynamic> json, T Function(Object? json) fromJsonT) {
-    return ApiResponseModel<T>(
+    return DataResponseModel<T>(
       code: json['code'],
       status: json['status'],
       msg: json['msg'],

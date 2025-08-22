@@ -17,9 +17,8 @@ class Urls {
 
   static String productListUrl = '$_baseUrl/products';
 
-  static String productDetailsUrl(int productId) =>
-      '$_baseUrl/ProductDetailsById/$productId';
+  static String productByIdUrl(String productId) =>
+      '$_baseUrl/products/id/$productId';
 
-  static String reviewListByProductId(int productId) =>
-      '$_baseUrl/ListReviewByProduct/$productId';
+  static String reviewListByProductId = '$_baseUrl/reviews';
 }

@@ -1,29 +1,27 @@
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/urls.dart';
-import 'package:crafty_bay_ecommerce/features/products/data/model/product_detatils_model.dart';
+import 'package:crafty_bay_ecommerce/features/common/data/models/product_model.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_caller.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_response.dart';
 
 class ProductDetailsController extends GetxController {
   bool _isLoading = true;
-  ProductDetailsListModel? _productDetailsListModel;
+  ProductModel? _productModel;
   String? _errorMessage;
 
   bool get isLoading => _isLoading;
-  List<ProductDetailsModel>? get productDetailsList =>
-      _productDetailsListModel?.productDetailsList ?? [];
+  ProductModel? get productModel => _productModel;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getProductDetails(int productId) async {
+  Future<bool> getProductById(String productId) async {
     bool isSuccess = false;
     _isLoading = true;
     update();
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      Urls.productDetailsUrl(productId),
+      Urls.productByIdUrl(productId),
     );
     if (response.isSuccess) {
-      _productDetailsListModel =
-          ProductDetailsListModel.fromJson(response.responseData);
+      _productModel = ProductModel.fromJson(response.responseData["data"]);
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

@@ -26,6 +26,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Color selectedColor = Colors.black;
   final ProductDetailsController _productDetailsController =
       Get.find<ProductDetailsController>();
+  final ReviewController _reviewController = Get.find<ReviewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         body: GetBuilder<ProductDetailsController>(builder: (controller) {
           if (controller.isLoading) return const CenterProgressIndicator();
 
-          if (controller.productDetailsList!.isNotEmpty) {
+          if (controller.productModel != null) {
             return Column(
               children: [
                 Expanded(
@@ -60,19 +61,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             children: [
                               // product carousel image
                               ProductDetailsCarouselSlider(
-                                images: [
-                                  controller.productDetailsList?.first.img1 ??
-                                      "",
-                                  _productDetailsController
-                                          .productDetailsList?.first.img2! ??
-                                      "",
-                                  _productDetailsController
-                                          .productDetailsList?.first.img3! ??
-                                      "",
-                                  _productDetailsController
-                                          .productDetailsList?.first.img4! ??
-                                      "",
-                                ],
+                                images: controller.productModel?.photos ?? [],
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
@@ -92,9 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       height: 4,
                                     ),
                                     ColorPickerWidget(
-                                      colors: controller
-                                          .productDetailsList!.first.color!
-                                          .split(",")
+                                      colors: controller.productModel!.colors!
                                           .map((e) => AppConstants.colors[e]!)
                                           .toList(),
                                     ),
@@ -110,9 +97,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       height: 4,
                                     ),
                                     SizePickerWidget(
-                                      sizes: controller
-                                          .productDetailsList!.first.size!
-                                          .split(","),
+                                      sizes: controller.productModel!.sizes!,
                                     ),
                                     const SizedBox(height: 16),
                                     const Text(
@@ -123,8 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       ),
                                     ),
                                     Text(
-                                        controller.productDetailsList!.first
-                                                .des ??
+                                        controller.productModel?.description ??
                                             "",
                                         style: textStyle.bodyMedium?.copyWith(
                                           color: Colors.grey,
@@ -160,9 +144,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         SizedBox(
           width: 250,
           child: Text(
-            _productDetailsController
-                    .productDetailsList?.first.product?.description ??
-                "",
+            _productDetailsController.productModel?.title ?? "",
             style: textStyle.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
             ),
@@ -178,30 +160,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildRatingReviewSection(BuildContext context) {
-    return Row(
-      spacing: 4,
-      children: [
-        const Icon(Icons.star, color: Colors.amber),
-        const Text("4.5"),
-        TextButton(
-          onPressed: () => _onTapReviews(
-              context, _productDetailsController.productDetailsList!.first.id!),
-          child: const Text("Reviews"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: AppColors.themeColor,
-            borderRadius: BorderRadius.circular(6),
+    return GetBuilder<ReviewController>(builder: (controller) {
+      print("review length ${controller.reviewList?.length}");
+      return Row(
+        spacing: 4,
+        children: [
+          const Icon(Icons.star, color: Colors.amber),
+          Text(controller.getAverageRating().toString()),
+          TextButton(
+            onPressed: () => _onTapReviews(
+                context, _productDetailsController.productModel?.sId ?? ""),
+            child: const Text("Reviews"),
           ),
-          child: Icon(
-            Icons.favorite_border_outlined,
-            color: Colors.white.withAlpha(150),
-            size: 16,
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: AppColors.themeColor,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Icon(
+              Icons.favorite_border_outlined,
+              color: Colors.white.withAlpha(150),
+              size: 16,
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 
   Widget _buildAddToCardSection(BuildContext context) {
@@ -241,8 +226,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  void _onTapReviews(BuildContext context, int id) {
-    Get.find<ReviewController>().getProductDetails(id);
+  void _onTapReviews(BuildContext context, String id) {
+    Get.find<ReviewController>().getProductReviews(id);
     Navigator.pushNamed(
       context,
       ProductReviewsScreen.name,
