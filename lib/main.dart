@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:crafty_bay_ecommerce/app/app.dart';
 
-void main(){
+void main() {
   runApp(const MCommerceApp());
 }

@@ -3,10 +3,13 @@ class Urls {
 
   static const String signUp = "$_baseUrl/auth/signup";
   static const String signIn = "$_baseUrl/auth/login";
+  static String verifyEmail(String email) =>
+      "$_baseUrl/auth/verify-email/$email";
   static const String verifyOtp = "$_baseUrl/auth/verify-otp";
 
   static const String readProfile = "$_baseUrl/ReadProfile";
   static const String slides = '$_baseUrl/slides';
+  static const String bannerListUrl = '$_baseUrl/slides';
   static const String categoryListUrl = '$_baseUrl/categories';
 
   static String productListByProductSlugUrl(String productSlug) =>
