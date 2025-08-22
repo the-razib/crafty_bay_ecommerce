@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/app_theme_data.dart';
 import 'package:crafty_bay_ecommerce/app/controller_binder.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/screens/complete_profile_screen.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_in_screen.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/splash_screens.dart';
 import 'package:crafty_bay_ecommerce/features/category/ui/screens/category_screen.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart';
@@ -39,13 +39,13 @@ class MCommerceApp extends StatelessWidget {
           widget = const SplashScreens();
         } else if (settings.name == MainLayout.name) {
           widget = const MainLayout();
-        } else if (settings.name == EmailVerificationScreen.name) {
-          widget = const EmailVerificationScreen();
+        } else if (settings.name == SignInScreen.name) {
+          widget = const SignInScreen();
         } else if (settings.name == OtpVerificationScreen.name) {
           final String email = settings.arguments as String;
           widget = OtpVerificationScreen(email: email);
-        } else if (settings.name == CompleteProfileScreen.name) {
-          widget = const CompleteProfileScreen();
+        } else if (settings.name == SignUpScreen.name) {
+          widget = const SignUpScreen();
         } else if (settings.name == CategoryScreen.name) {
           widget = const CategoryScreen();
         } else if (settings.name == ProductsScreen.name) {

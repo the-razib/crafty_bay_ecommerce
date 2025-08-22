@@ -5,39 +5,27 @@ import 'package:crafty_bay_ecommerce/features/common/ui/controllers/auth_control
 import 'package:crafty_bay_ecommerce/service/network/network_caller.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_response.dart';
 
-class OtpVerificationController extends GetxController {
+class SignInController extends GetxController {
   bool _isLoading = false;
-  String? _errorMessage;
-  String? _token;
-
   bool get isLoading => _isLoading;
-  String? get errorMessage => _errorMessage;
-  String? get token => _token;
+  final String _errorMessage = "";
+  String get errorMessage => _errorMessage;
 
-  Future<bool> verifyOtp(String email, String otp) async {
+  Future<bool> signIn(String email, String password) async {
     bool isSuccess = false;
     _isLoading = true;
     update();
-    Map<String, dynamic> requestBody = {
+    Map<String, dynamic> body = {
       "email": email,
-      "otp": otp,
+      "password": password,
     };
-    final NetworkResponse response =
-        await Get.find<NetworkCaller>().postRequest(
-      Urls.verifyOtp,
-      requestBody,
-    );
+    NetworkResponse response =
+        await Get.find<NetworkCaller>().postRequest(Urls.signIn, body);
     if (response.isSuccess) {
-      _errorMessage = null;
-      isSuccess = true;
       SignInModel signInModel = SignInModel.fromJson(response.responseData);
-      // read profile data
-      await Get.find<AuthController>().saveUserData(
-        signInModel.data!.token!,
-        signInModel.data!.user!,
-      );
-    } else {
-      _errorMessage = response.errorMessage;
+      await Get.find<AuthController>()
+          .saveUserData(signInModel.data!.token!, signInModel.data!.user!);
+      isSuccess = true;
     }
 
     _isLoading = false;

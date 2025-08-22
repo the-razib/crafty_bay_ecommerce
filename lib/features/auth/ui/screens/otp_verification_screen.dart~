@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crafty_bay_ecommerce/app/app_colors.dart';
-import 'package:crafty_bay_ecommerce/app/app_constants.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/otpl_verification_controller.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
+import 'package:m_commerce/app/app_colors.dart';
+import 'package:m_commerce/app/app_constants.dart';
+import 'package:m_commerce/features/auth/ui/controllers/otpl_verification_controller.dart';
+import 'package:m_commerce/features/auth/ui/widgets/app_logo_widget.dart';
+import 'package:m_commerce/features/common/ui/screens/main_layout.dart';
+import 'package:m_commerce/features/common/ui/widgets/center_progress_indicator.dart';
+import 'package:m_commerce/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -98,8 +98,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   // errorAnimationController: errorController,
                   controller: _otpTEController,
                   validator: (String? value) {
-                    if (value!.length != 4) {
-                      return "Please enter 4 digit OTP";
+                    if (value!.length != 6) {
+                      return "Please enter 6 digit OTP";
                     } else {
                       return null;
                     }
