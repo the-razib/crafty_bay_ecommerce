@@ -1,15 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:crafty_bay_ecommerce/app/app_colors.dart';
-import 'package:crafty_bay_ecommerce/features/home/data/models/banner_model.dart';
+import 'package:crafty_bay_ecommerce/features/home/data/models/slider_model.dart';
 
 class HomeCarouselSlider extends StatefulWidget {
   const HomeCarouselSlider({
     super.key,
-    required this.bannerList,
+    required this.sliders,
   });
 
-  final List<BannerModel> bannerList;
+  final List<SliderModel> sliders;
 
   @override
   State<HomeCarouselSlider> createState() => _HomeCarouselSliderState();
@@ -41,7 +41,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
             enableInfiniteScroll: true,
             autoPlayAnimationDuration: const Duration(milliseconds: 3000),
           ),
-          items: widget.bannerList.map((data) {
+          items: widget.sliders.map((data) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -51,7 +51,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                     borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                     // color: AppColors.themeColor,
                     image: DecorationImage(
-                      image: NetworkImage(data.image ?? ""),
+                      image: NetworkImage(data.photoUrl ?? ""),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -62,7 +62,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Buy ${data.title}",
+                          "Buy ${data.description ?? ""}",
                           style: TextTheme.of(context).titleMedium?.copyWith(
                                 fontWeight: FontWeight.w700,
                               ),
@@ -91,7 +91,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < widget.bannerList.length; i++)
+                  for (int i = 0; i < widget.sliders.length; i++)
                     GestureDetector(
                       onTap: () {
                         _carouselController.animateToPage(i);

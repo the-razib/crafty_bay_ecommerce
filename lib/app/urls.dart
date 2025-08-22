@@ -7,7 +7,7 @@ class Urls {
   static String verifyOtp = "$_baseUrl/auth/verify-otp";
 
   static String readProfile = "$_baseUrl/ReadProfile";
-  static String bannerListUrl = '$_baseUrl/ListProductSlider';
+  static String slides = '$_baseUrl/slides';
   static String categoryListUrl = '$_baseUrl/CategoryList';
 
   static String productListByRemarkUrl(String remark) =>

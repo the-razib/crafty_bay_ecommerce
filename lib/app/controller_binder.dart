@@ -12,7 +12,7 @@ import 'package:crafty_bay_ecommerce/features/common/ui/controllers/regular_prod
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/special_product_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/top_product_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/trending_product_list_controller.dart';
-import 'package:crafty_bay_ecommerce/features/home/ui/controller/home_banner_list_controller.dart';
+import 'package:crafty_bay_ecommerce/features/home/ui/controller/home_carousel_slider_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_details_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_list_by_category_controller.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
@@ -28,7 +28,7 @@ class ControllerBinder extends Bindings {
     Get.put(AuthController());
     Get.put(OtpVerificationController());
     Get.put(ReadProfileController());
-    Get.put(HomeBannerListController());
+    Get.put(HomeCarouselSliderController());
     Get.put(CategoryListController());
     Get.put(NewProductListController());
     Get.put(PopularProductListController());

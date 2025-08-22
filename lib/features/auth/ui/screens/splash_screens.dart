@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/controllers/auth_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart';
 
 class SplashScreens extends StatefulWidget {
@@ -43,15 +41,9 @@ class _SplashScreensState extends State<SplashScreens> {
   }
 
   Future<void> _goToNextScreen() async {
-    await AuthController().getUserData();
     await Future.delayed(const Duration(seconds: 2));
-
-    if (await AuthController().isUserLoggedIn() && mounted) {
+    if (mounted) {
       Navigator.pushReplacementNamed(context, MainLayout.name);
-    } else {
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, SignInScreen.name);
-      }
     }
   }
 }
