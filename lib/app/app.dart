@@ -11,7 +11,7 @@ import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart
 import 'package:crafty_bay_ecommerce/features/products/ui/screens/product_details_screen.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/screens/products_screen.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/screens/create_review_screen.dart';
-import 'package:crafty_bay_ecommerce/features/review/ui/screens/reviews_screen.dart';
+import 'package:crafty_bay_ecommerce/features/review/ui/screens/product_reviews_screen.dart';
 
 class MCommerceApp extends StatelessWidget {
   const MCommerceApp({super.key});
@@ -58,10 +58,12 @@ class MCommerceApp extends StatelessWidget {
               // productId: productId,
               );
         } else if (settings.name == ProductReviewsScreen.name) {
-          // final int productId = settings.arguments as int;
-          widget = const ProductReviewsScreen();
+          final String productId = settings.arguments as String;
+          widget = ProductReviewsScreen(productId: productId);
         } else if (settings.name == CreateReviewScreen.name) {
-          widget = const CreateReviewScreen();
+          final Map<String, dynamic> data =
+              settings.arguments as Map<String, dynamic>;
+          widget = CreateReviewScreen(data: data);
         }
 
         return MaterialPageRoute(builder: (context) {

@@ -6,7 +6,6 @@ import 'package:crafty_bay_ecommerce/app/app_colors.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay_ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
-import 'package:crafty_bay_ecommerce/features/common/ui/screens/main_layout.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/center_progress_indicator.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/snack_bar_message.dart';
 
@@ -114,17 +113,13 @@ class _SignInScreenState extends State<SignInScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       bool isSuccess = await _signInController.signIn(
           _emailTEController.text.trim(), _passwordTEController.text);
-      if (isSuccess) {
-        if (mounted) {
+
+      if (mounted) {
+        if (isSuccess) {
           _emailTEController.clear();
           _formKey.currentState?.reset();
-          Navigator.pushNamed(
-            context,
-            MainLayout.name,
-          );
-        }
-      } else {
-        if (mounted) {
+          Navigator.pop(context);
+        } else {
           showSnackBarMessage(context, "Something went wrong", true);
         }
       }

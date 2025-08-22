@@ -6,10 +6,14 @@ import 'package:crafty_bay_ecommerce/features/common/ui/controllers/auth_control
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/main_layout_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/product_list_controller.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/controllers/user_controller.dart';
 import 'package:crafty_bay_ecommerce/features/home/ui/controller/home_carousel_slider_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_details_controller.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/controllers/product_list_by_category_controller.dart';
+import 'package:crafty_bay_ecommerce/features/review/ui/controller/add_new_review_controller.dart';
+import 'package:crafty_bay_ecommerce/features/review/ui/controller/delete_review_controller.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
+import 'package:crafty_bay_ecommerce/features/review/ui/controller/update_review_controller.dart';
 import 'package:crafty_bay_ecommerce/service/network/network_caller.dart';
 
 class ControllerBinder extends Bindings {
@@ -20,6 +24,7 @@ class ControllerBinder extends Bindings {
     Get.put(SignInController());
     Get.put(SignUpController());
     Get.put(AuthController());
+    Get.put(UserController());
     Get.put(OtpVerificationController());
     Get.put(HomeCarouselSliderController());
     Get.put(CategoryListController());
@@ -27,5 +32,8 @@ class ControllerBinder extends Bindings {
     Get.put(ProductListByCategoryController());
     Get.put(ProductDetailsController());
     Get.put(ReviewController());
+    Get.put(AddNewReviewController());
+    Get.put(UpdateReviewController());
+    Get.put(DeleteReviewController());
   }
 }

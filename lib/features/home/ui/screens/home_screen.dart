@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:crafty_bay_ecommerce/app/assets_path.dart';
+import 'package:crafty_bay_ecommerce/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay_ecommerce/features/common/data/models/category_model.dart';
 import 'package:crafty_bay_ecommerce/features/common/data/models/product_model.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/controllers/auth_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/main_layout_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/controllers/product_list_controller.dart';
+import 'package:crafty_bay_ecommerce/features/common/ui/controllers/user_controller.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/app_bar_icon_button.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/category_items_icon_widget.dart';
 import 'package:crafty_bay_ecommerce/features/common/ui/widgets/product_item_widget.dart';
@@ -26,6 +29,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AuthController _authController = Get.find<AuthController>();
+
+  bool _isLoggedIn = false;
+
+  @override
+  void initState() {
+    _isLoggedInFn();
+    super.initState();
+  }
+
+  void _isLoggedInFn() async {
+    _isLoggedIn = await _authController.isUserLoggedIn();
+    await Get.find<UserController>().checkUserLoggedIn();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,10 +182,28 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 120,
         child: SvgPicture.asset(AssetsPath.logoNav),
       ),
-      actions: const [
-        AppBarIconButton(icon: Icons.person_2_outlined),
-        AppBarIconButton(icon: Icons.call_outlined),
-        AppBarIconButton(icon: Icons.notifications_outlined),
+      actions: [
+        const AppBarIconButton(icon: Icons.person_2_outlined),
+        const AppBarIconButton(icon: Icons.call_outlined),
+        const AppBarIconButton(icon: Icons.notifications_outlined),
+        if (_isLoggedIn)
+          IconButton(
+            icon: const Icon(Icons.logout_outlined),
+            onPressed: () {
+              _authController.logout();
+              _isLoggedInFn();
+              setState(() {});
+            },
+          )
+        else
+          AppBarIconButton(
+            icon: Icons.login_outlined,
+            onTap: () {
+              Navigator.pushNamed(context, SignInScreen.name);
+              _isLoggedInFn();
+              setState(() {});
+            },
+          ),
       ],
     );
   }

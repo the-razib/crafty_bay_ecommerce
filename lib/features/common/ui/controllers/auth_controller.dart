@@ -37,4 +37,13 @@ class AuthController {
       return false;
     }
   }
+
+  void logout() {
+    SharedPreferences.getInstance().then((value) {
+      value.remove(_accessTokenKey);
+      value.remove(_profileDataKey);
+    });
+    accessToken = null;
+    userModel = null;
+  }
 }

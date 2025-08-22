@@ -21,4 +21,9 @@ class Urls {
       '$_baseUrl/products/id/$productId';
 
   static String reviewListByProductId = '$_baseUrl/reviews';
+  static String createReview = '$_baseUrl/review';
+  static String updateReviewById(String reviewId) =>
+      '$_baseUrl/reviews/$reviewId';
+  static String deleteReviewById(String reviewId) =>
+      '$_baseUrl/reviews/$reviewId';
 }

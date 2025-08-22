@@ -9,7 +9,7 @@ import 'package:crafty_bay_ecommerce/features/products/ui/widgets/color_picker_w
 import 'package:crafty_bay_ecommerce/features/products/ui/widgets/product_details_carousel_slider.dart';
 import 'package:crafty_bay_ecommerce/features/products/ui/widgets/size_picker_widget.dart';
 import 'package:crafty_bay_ecommerce/features/review/ui/controller/review_controller.dart';
-import 'package:crafty_bay_ecommerce/features/review/ui/screens/reviews_screen.dart';
+import 'package:crafty_bay_ecommerce/features/review/ui/screens/product_reviews_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const String name = '/products/product-details';
@@ -26,6 +26,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Color selectedColor = Colors.black;
   final ProductDetailsController _productDetailsController =
       Get.find<ProductDetailsController>();
+  int _itemCount = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +152,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
         CountIncrementDecrementWidget(
           onChangeCount: (value) {
-            print(value);
+            _itemCount = value;
+            setState(() {});
           },
         ),
       ],
@@ -164,10 +166,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         spacing: 4,
         children: [
           const Icon(Icons.star, color: Colors.amber),
-          Text(controller.getAverageRating().toString()),
+          Text(controller.getAverageRating().toStringAsFixed(1)),
           TextButton(
             onPressed: () => _onTapReviews(
-                context, _productDetailsController.productModel?.sId ?? ""),
+              context,
+              _productDetailsController.productModel?.sId ?? "",
+            ),
             child: const Text("Reviews"),
           ),
           Container(
@@ -201,11 +205,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+            Column(
               children: [
-                Text("Price"),
-                Text("\$1000",
-                    style: TextStyle(
+                const Text("Price"),
+                Text(
+                    "\$${(_productDetailsController.productModel?.currentPrice ?? 0.00) * _itemCount}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       color: AppColors.themeColor,
                     )),
@@ -224,11 +229,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  void _onTapReviews(BuildContext context, String id) {
-    Get.find<ReviewController>().getProductReviews(id);
+  void _onTapReviews(BuildContext context, String id) async {
     Navigator.pushNamed(
       context,
       ProductReviewsScreen.name,
+      arguments: id,
     );
+    Get.find<ReviewController>().reset();
+    await Get.find<ReviewController>().getProductReviews(id);
   }
 }
