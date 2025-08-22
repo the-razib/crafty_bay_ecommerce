@@ -137,7 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => FittedBox(
-                      child: ProductItemWidget(),
+                      child: ProductItemWidget(
+                        productModel: controller.productList[index],
+                      ),
                     ),
                     childCount: controller.productList.length,
                   ),
@@ -177,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: category.title ?? "",
           icon: Icons.image_outlined,
           imageUrl: category.icon,
-          categoryId: 1,
+          categoryId: category.sId,
         ),
       );
     }

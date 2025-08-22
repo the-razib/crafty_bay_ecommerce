@@ -75,9 +75,9 @@ class ProductReviewsScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
-        itemCount: reviewController.reviewList?.length ?? 0,
+        itemCount: reviewController.reviewList.length,
         itemBuilder: (context, index) {
-          final ReviewModel reviewModel = reviewController.reviewList![index];
+          final ReviewModel reviewModel = reviewController.reviewList[index];
           return Card(
             elevation: 0.05,
             color: Colors.white,

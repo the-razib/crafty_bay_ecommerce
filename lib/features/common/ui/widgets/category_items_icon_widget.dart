@@ -13,7 +13,7 @@ class CategoryItemsIconWidget extends StatelessWidget {
     required this.categoryId,
   });
 
-  final int categoryId;
+  final String categoryId;
   final String title;
   final IconData icon;
   final String? imageUrl;

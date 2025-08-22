@@ -60,7 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               icon: Icons.image_outlined,
               imageUrl: controller.categoryList?[index].icon,
               // categoryId: controller.categoryList[index].id!,
-              categoryId: 1,
+              categoryId: controller.categoryList?[index].sId ?? "",
             ),
           );
         }),

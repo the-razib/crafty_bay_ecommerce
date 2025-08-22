@@ -212,14 +212,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "city": _cityTEController.text.trim(),
       };
       bool isSuccess = await Get.find<SignUpController>().signUp(body);
-      if (isSuccess) {
-        Navigator.pushNamed(
-          context,
-          OtpVerificationScreen.name,
-          arguments: _emailTEController.text.trim(),
-        );
-      } else {
-        showSnackBarMessage(context, "Something went wrong", true);
+      if (mounted) {
+        if (isSuccess) {
+          Navigator.pushNamed(
+            context,
+            OtpVerificationScreen.name,
+            arguments: _emailTEController.text.trim(),
+          );
+        } else {
+          showSnackBarMessage(context, "Something went wrong", true);
+        }
       }
     }
   }

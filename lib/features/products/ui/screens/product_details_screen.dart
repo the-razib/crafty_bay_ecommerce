@@ -26,7 +26,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Color selectedColor = Colors.black;
   final ProductDetailsController _productDetailsController =
       Get.find<ProductDetailsController>();
-  final ReviewController _reviewController = Get.find<ReviewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +160,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget _buildRatingReviewSection(BuildContext context) {
     return GetBuilder<ReviewController>(builder: (controller) {
-      print("review length ${controller.reviewList?.length}");
       return Row(
         spacing: 4,
         children: [
